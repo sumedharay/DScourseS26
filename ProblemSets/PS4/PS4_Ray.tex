@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\title{Problem Set 4}
+\author{Sumedha Ray}
+\date{February 24, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Data Sources I Would Like to Scrape}
+
+There are several data sources I would be interested in scraping for research purposes.
+First, the NBER Working Papers website (\url{https://www.nber.org/papers}) provides 
+access to working papers in economics, which could be scraped to analyze 
+trends in research topics, citations, and author networks over time. Second, 
+EconJobMarket.org (\url{https://econjobmarket.org}) contains job market candidate 
+profiles and placement outcomes, which could be used to study patterns in PhD placement 
+across institutions, fields, and demographic groups. Third, the IZA Discussion Papers 
+database (\url{https://docs.iza.org}) which has a large collection of labor economics 
+papers that could be scraped to study research trends in gender economics and 
+discrimination. 
+I would also be interested in scraping the World Bank Open Data API provides extensive development indicators for countries over time. 
+
+
+\section*{Q5(d): Object Types}
+The object \texttt{mydf} is of class \texttt{tbl\_df}, \texttt{tbl}, and 
+\texttt{data.frame} -- that is, it is a tibble/dataframe. The object 
+\texttt{mydf\$date} is of class \texttt{character}, meaning it is stored as 
+a character/string vector rather than a numeric or date type.
+
+\section*{Q6(7): Spark vs. Tibble Classes}
+\texttt{df1} (a tibble) has class \texttt{tbl\_df}, \texttt{tbl}, \texttt{data.frame}.
+\texttt{df} (a Spark dataframe) has class \texttt{tbl\_spark}, \texttt{tbl\_sql}, 
+\texttt{tbl\_lazy}, \texttt{tbl}.
+
+\section*{Q6(8): Column Names}
+The column names differ between the tibble and the Spark dataframe. In the tibble,
+column names use dots (e.g., \texttt{Sepal.Length}), while in Spark they use 
+underscores (e.g., \texttt{Sepal\_Length}). This is because Spark/SQL does not 
+allow dots in column names, so \texttt{sparklyr} automatically converts them.
+
+\section*{Q6: Note on sparklyr}
+Despite attempting to install \texttt{sparklyr} on OSCER, the installation was 
+unsuccessful due to dependency failures, particularly with the \texttt{dbplyr} 
+package. This appears to be a compatibility issue between the version of R 
+available on OSCER (R 4.0.2) and the current version of \texttt{sparklyr}. 
+As noted in the problem set instructions, students would not be penalized if 
+\texttt{sparklyr} does not work on the first try.
+
+\end{document}
