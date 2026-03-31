@@ -1,0 +1,79 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\geometry{margin=1in}
+
+\title{Problem Set 7\\Econ 5253 --- Spring 2026}
+\author{Sumedha Ray}
+\date{March 31, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Question 6: Summary Statistics and Missing Data}
+
+\input{summary_table}
+
+The \texttt{logwage} variable is missing for 25.12\% of observations.
+I believe \texttt{logwage} is most likely \textbf{Missing Not at Random (MNAR)}.
+Women with very low or very high wages may be systematically less likely to
+report earnings, meaning the probability of missingness depends on the unobserved
+wage value itself. This violates both MCAR and MAR.
+
+\section*{Question 7: Imputation Methods and Returns to Schooling}
+
+I estimate the following model under four imputation strategies:
+\begin{equation}
+\log(\text{wage}_i) = \beta_0 + \beta_1 \text{hgc}_i + \beta_2 \text{college}_i
++ \beta_3 \text{tenure}_i + \beta_4 \text{tenure}_i^2
++ \beta_5 \text{age}_i + \beta_6 \text{married}_i + \varepsilon_i
+\end{equation}
+
+The true value of $\hat{\beta}_1 = 0.093$.
+
+\input{regression_table}
+
+All four methods underestimate the true $\hat{\beta}_1 = 0.093$, but the
+degree of attenuation differs across methods. Mean imputation performs worst
+($\hat{\beta}_1 = 0.0497$), which is expected: replacing missing wages with
+the sample mean removes all covariance between log wages and the regressors,
+attenuating every slope coefficient toward zero. Complete cases does better
+($\hat{\beta}_1 = 0.0624$), though it relies on the MCAR assumption which is
+likely violated here. Predicted value imputation ($\hat{\beta}_1 = 0.0571$)
+is derived directly from the complete cases model, so it mechanically
+preserves the covariate relationships but inflates precision by treating
+imputed values as observed.
+
+The MICE estimate ($\hat{\beta}_1 = 0.0583$) is the most principled of the
+four. By drawing multiple plausible values for each missing observation via
+predictive mean matching and pooling across five imputed datasets, MICE
+correctly propagates uncertainty from the missing data into the standard
+errors. That said, all estimates remain below the true value of 0.093,
+suggesting the data are likely MNAR and that no imputation method fully
+recovers the true parameter without modeling the missingness mechanism
+directly.
+
+\section*{Question 8: Project Progress}
+
+My project, which I am developing as a potential job market paper,
+asks whether economists who study sensitive topics---such as race, religion,
+and discrimination---face systematically worse labor market and career
+outcomes than observationally comparable candidates working on conventional
+research topics. The core identification leverages variation in dissertation
+topic (classified using JEL codes and keyword matching from ProQuest
+Dissertations \& Theses) to ask three related questions: (1) does working
+on sensitive topics reduce the probability of obtaining an academic
+position, conditional on candidate quality and program rank? (2) do
+researchers on these topics shift their agendas around the tenure
+threshold, consistent with pre-tenure conformity pressure or post-tenure
+intellectual liberation? and (3) to what extent do observed patterns
+reflect demand-side discrimination versus rational supply-side
+self-censorship? My advisor has suggested framing the topic selection
+as a discrete choice/Roy model to account for selection into sensitive
+research areas based on demographics and program characteristics. I am
+currently building the data pipeline using ProQuest, RePec, and department
+placement pages.
+\end{document}
