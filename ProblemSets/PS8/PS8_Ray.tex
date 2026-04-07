@@ -1,0 +1,49 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tabularray}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{ECON 5253 - Problem Set 8}
+\author{Sumedha Ray}
+\date{April 7, 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 4: Data Generation}
+
+I generated a dataset with $N = 100{,}000$ observations and $K = 10$ variables. The matrix $X$ has a column of ones as its first column and normally distributed random numbers in the remaining columns. The error vector $\varepsilon \sim N(0, 0.25)$, and $Y = X\beta + \varepsilon$ where the true $\beta$ is:
+
+\[
+\beta = \begin{bmatrix} 1.5 & -1 & -0.25 & 0.75 & 3.5 & -2 & 0.5 & 1 & 1.25 & 2 \end{bmatrix}'
+\]
+
+\section*{Problem 5: Closed-Form OLS}
+
+I computed $\hat{\beta}_{OLS} = (X'X)^{-1}X'Y$ directly. The estimates are extremely close to the true $\beta$, which is expected given the large sample size of $N = 100{,}000$.
+
+\section*{Problem 6: Gradient Descent OLS}
+
+I computed $\hat{\beta}_{OLS}$ using gradient descent with a learning rate of $0.0000003$ and $10{,}000$ iterations. The estimates are very close to the true $\beta$, though slightly less precise than the closed-form solution due to the finite number of iterations.
+
+\section*{Problem 7: nloptr L-BFGS and Nelder-Mead OLS}
+
+I computed $\hat{\beta}_{OLS}$ using both the L-BFGS and Nelder-Mead algorithms in \texttt{nloptr}. With a sufficient number of iterations (\texttt{maxeval = 1,000,000}), both algorithms converge to the same solution, which closely matches the true $\beta$. Without enough iterations, Nelder-Mead performs worse than L-BFGS because it is a derivative-free method that converges more slowly in high dimensions.
+
+\section*{Problem 8: MLE with L-BFGS}
+
+I computed $\hat{\beta}_{MLE}$ using the L-BFGS algorithm with the provided gradient function. The beta estimates are nearly identical to those from OLS, and the estimated $\hat{\sigma} \approx 0.501$, which is very close to the true value of $\sigma = 0.5$. A lower bound of $0.001$ was imposed on $\sigma$ to ensure the optimizer stayed in a valid region.
+
+\section*{Problem 9: OLS via \texttt{lm()}}
+
+Table 1 reports the OLS estimates from \texttt{lm(Y \textasciitilde\ X - 1)}. All ten estimates are extremely close to the true $\beta$ values, with differences of at most $0.003$ in absolute value. This is expected: with $N = 100{,}000$ observations, the OLS estimator is very precise and the sampling variance is negligible. The R$^2$ of $0.991$ confirms that the model fits the data well, and the RMSE of $0.50$ closely matches the true $\sigma = 0.5$.
+
+
+\input{PS8_Ray_table}
+
+\end{document}

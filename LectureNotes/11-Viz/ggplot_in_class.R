@@ -12,6 +12,9 @@ ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_point()
 ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter()
 ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_bw() # if you don't want a gray theme
 ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_minimal()
+ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_jitter() + theme_minimal() + ylim(0,50) + xlim(0,40)
+
+
 
 # save
 ggsave("badgraph.png")
