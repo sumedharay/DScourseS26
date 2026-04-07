@@ -83,6 +83,6 @@ result_mle <- nloptr(x0 = c(result_lbfgs$solution, 1),
 print(result_mle$solution)
 
 model <- lm(Y ~ X - 1)
-modelsummary(model, output = "PS8_Ray_table.tex")
-
-
+modelsummary(model, 
+             output = "PS8_Ray_table.tex",
+             title = "OLS Estimates via lm()")
