@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\title{ECON 5253 - Problem Set 8}
+\author{Sumedha Ray}
+\date{April 13, 2026}
+
+
+\begin{document}
+\maketitle
+
+\section*{Q7: Dimensions of Training Data}
+
+The original housing dataset contains 506 observations and 13 predictors. After splitting it by 75/25 for train-test (seed 123456), the training set has 379 observations. After applying the recipe (log-transforming the outcome, dummy-encoding \texttt{chas}, adding all pairwise interactions among the 12 continuous predictors, and creating 6th-degree polynomial terms for each) the preprocessed feature matrix contains 74 columns. This is 61 more predictors than the original 13.
+
+\section*{Q8: LASSO Results}
+
+The optimal penalty parameter selected by the 6-fold cross-validation is $\hat{\lambda} = 0.0376$. The in-sample RMSE is 0.1992. The out-of-sample RMSE on the held-out test set is 0.1899.
+
+\section*{Q9: Ridge Regression Results}
+
+The optimal penalty parameter for ridge regression selected by the 6-fold cross-validation is $\hat{\lambda} = 1.6298$. The out-of-sample RMSE is 0.2419.
+
+\section*{Q10: Discussion}
+
+\subsection*{OLS with More Columns than Rows}
+
+No. When the number of predictors $p$ exceeds the number of observations $n$, the matrix $X'X$ is rank-deficient and cannot be inverted, making the OLS estimator $\hat{\beta} = (X'X)^{-1}X'y$ undefined. In this problem set, after feature engineering we have 74 predictors and only 379 training observations. While $p < n$ here, the predictors are highly collinear (polynomials and interactions of the same underlying variables), which makes $X'X$ nearly singular and OLS estimates extremely unstable. Regularization addresses this by adding a penalty term that stabilizes estimation.
+
+\subsection*{Bias-Variance Tradeoff}
+
+Both LASSO and ridge penalize model complexity to reduce variance at the cost of introducing some bias. The optimal $\lambda$ for each model balances this tradeoff via cross-validation: too small a $\lambda$ leaves too much variance (overfitting); too large a $\lambda$ introduces too much bias (underfitting).
+
+LASSO achieved an out-of-sample RMSE of 0.1899, while ridge achieved 0.2419 (LASSO outperforms ridge by about 22\%). This is consistent with the nature of our feature space. After polynomial expansion and interactions, many predictors are likely to be noise. LASSO's $L_1$ penalty can shrink these coefficients exactly to zero, effectively performing variable selection. Ridge's $L_2$ penalty shrinks all coefficients toward zero but retains them all, leaving more variance in the predictions.
+
+The fact that LASSO's in-sample RMSE (0.1992) is only marginally higher than its out-of-sample RMSE (0.1899) suggests the model is well-regularized with minimal overfitting (cross-validation successfully identified a $\lambda$ that generalizes well to new data).
+
+\end{document}
