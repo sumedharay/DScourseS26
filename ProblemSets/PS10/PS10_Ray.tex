@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{parskip}
+\title{ECON 5253 - Problem Set 10}
+\author{Sumedha Ray}
+\date{April 21, 2026}
+\begin{document}
+\maketitle
+
+\section*{Q9: Optimal Tuning Parameters and Out-of-Sample Performance}
+
+Table \ref{tab:results} reports the optimal tuning parameters selected by 3-fold cross-validation and the out-of-sample classification accuracy on the held-out test set for each of the five algorithms.
+
+\begin{table}[h!]
+\centering
+\caption{Optimal Tuning Parameters and Test-Set Accuracy}
+\label{tab:results}
+\begin{tabular}{llll}
+\toprule
+Algorithm & Hyperparameter(s) & Optimal Value(s) & Test Accuracy \\
+\midrule
+Logistic Regression & $\lambda$ (penalty) & 0.0000000001 & 0.853 \\
+Decision Tree & cost\_complexity & 0.001 & 0.868 \\
+                   & tree\_depth & 15 & \\
+                   & min\_n & 10 & \\
+Neural Network & hidden\_units & 7 & 0.845 \\
+               & $\lambda$ (penalty) & 1.0 & \\
+$k$-Nearest Neighbor & neighbors & 30 & 0.843 \\
+SVM (RBF Kernel) & cost & 1.0 & 0.864 \\
+                 & rbf\_sigma & 0.25 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Comparison of Out-of-Sample Performance}
+
+The decision tree achieves the highest test-set accuracy at 86.8\%, followed closely by the SVM at 86.4\%. Logistic regression performs well at 85.3\%, which is notable given its simplicity relative to the other methods. The neural network and $k$-nearest neighbor algorithms perform similarly to each other at 84.5\% and 84.3\% respectively, and are the weakest performers in this comparison.
+
+The strong performance of the decision tree is consistent with the nature of the adult income dataset. Income classification tends to involve threshold-type relationships (e.g., education level above a cutoff, hours above a threshold) that tree-based splits capture naturally. The SVM's competitive performance reflects its ability to find a high-dimensional decision boundary that separates the two income classes effectively.
+
+The neural network's relatively modest performance is likely attributable to the shallow architecture imposed by the tuning grid (at most 10 hidden units) and the fact that we did not perform any feature engineering or normalization, which neural networks tend to benefit from more than tree-based methods. Similarly, kNN's accuracy plateauing at $k=30$ neighbors suggests the decision boundary is not well-approximated by local majority voting in the raw feature space.
+
+Overall, the range of test accuracies across all five algorithms is narrow (84.3\%--86.8\%), suggesting that the signal in the adult income data is robust and most classifiers can extract it, with differences driven by how well each algorithm handles the specific structure of this feature space.
+
+\end{document}
