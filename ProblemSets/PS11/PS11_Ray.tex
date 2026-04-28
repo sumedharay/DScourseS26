@@ -1,0 +1,165 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{setspace}
+\usepackage{underscore}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{pdflscape}
+\usepackage{caption}
+\usepackage[authoryear]{natbib}
+\newcommand{\sym}[1]{\ensuremath{^{#1}}}
+
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{darkblue}{RGB}{0.,0.,139.}
+
+\usepackage{hyperref}
+\usepackage{cleveref} 
+\hypersetup{unicode=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=3,
+  breaklinks=true,pdfborder={0 0 0},colorlinks,citecolor=darkblue,filecolor=darkblue,
+  linkcolor=darkblue,urlcolor=darkblue}
+
+\onehalfspacing
+
+\newcommand{\tablepath}{tables/}
+
+\title{Career Incentives and Research Topic Choice Among Economists}
+\author{Sumedha Ray}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+{
+\singlespacing
+\begin{abstract}
+Do economists who study sensitive topics such as race, religion, discrimination, and gender, face career penalties, and do they respond by strategically shifting their research agendas around tenure? This paper constructs a novel dataset linking dissertation topic choices from the JEL Annual Dissertations Lists (1990--2024) to post-PhD career outcomes from IDEAS/RePEC. Preliminary descriptive evidence from the 2024 cohort shows that women are substantially more likely than men to write dissertations on sensitive topics, particularly at top PhD programs.
+\end{abstract}
+}
+
+\newpage
+
+\section{Introduction}
+\label{sec:intro}
+\begin{itemize}
+    \item Academic economists face strong incentives to publish in top journals and secure tenure.
+    \item Research on sensitive topics (race, religion, discrimination, gender) may be harder to publish or perceived as less rigorous, creating career risk.
+    \item This paper asks: (1) Are economists who study sensitive topics penalized in their careers? (2) Do they strategically shift research agendas around tenure?
+    \item I use the JEL Annual Dissertations Lists to track dissertation topic choice from 1990--2024 and link to career outcomes via IDEAS/RePEC.
+    \item Preliminary evidence: women are substantially more likely to write sensitive-topic dissertations, especially at top programs.
+\end{itemize}
+
+\section{Literature Review}
+\label{sec:litreview}
+\begin{itemize}
+    \item \citet{ginther2004}: women less likely to receive tenure in economics even conditional on productivity.
+    \item \citet{bayer2016}: overview of underrepresentation of women and minorities; structural barriers in the profession.
+    \item \citet{card2020}: evidence of gender bias in peer review at top journals.
+    \item \citet{hengel2022}: papers by women take longer through peer review and are held to higher standards.
+    \item \citet{doleac2022}: documents who researches race and policing; notes underrepresentation of minority scholars.
+    \item \citet{koffi2021}: women more likely to pursue novel and unconventional research, which may carry higher career variance.
+    \item \citet{akerlof2020}: career incentives can distort research choices and perpetuate existing paradigms.
+\end{itemize}
+
+\section{Data}
+\label{sec:data}
+\begin{itemize}
+    \item \textbf{JEL Annual Dissertations Lists}: published annually in the \textit{Journal of Economic Literature}, available on JSTOR. Contains dissertation title, author name, institution, graduation year, and JEL codes. Sample: 1990--2024.
+    \item \textbf{Sensitive topic classification}: dissertation flagged as sensitive if title contains keywords related to race, ethnicity, religion, gender, or discrimination, OR if JEL codes include categories such as J15, J16, Z12. Formally:
+    \begin{equation}
+        S_i = \mathbf{1}\left[\text{title}_i \in \mathcal{K} \;\cup\; \text{JEL}_i \in \mathcal{J}\right]
+    \end{equation}
+    where $\mathcal{K}$ is the keyword set and $\mathcal{J}$ is the set of sensitive JEL codes.
+    \item \textbf{Career outcomes}: IDEAS/RePEC provides publication records, citation counts, and institutional affiliations. Merged to dissertation records using author name, institution, and graduation year with fuzzy matching.
+    \item \textbf{Current status}: 2024 cohort parsed and analyzed. Full 1990--2024 merge in progress.
+\end{itemize}
+
+\section{Empirical Strategy}
+\label{sec:empirical}
+\begin{itemize}
+    \item \textbf{Cross-sectional}: estimate gender gap in sensitive-topic dissertation choice, with cohort and program fixed effects:
+    \begin{equation}
+        S_{ic} = \alpha + \beta\,\text{Female}_{ic} + \gamma\,\text{TopProgram}_{ic} + \delta\,(\text{Female} \times \text{TopProgram})_{ic} + \theta_c + \varepsilon_{ic}
+    \end{equation}
+    \item \textbf{Career outcomes}: regress publications, citations, and placement rank on sensitive-topic indicator, controlling for gender, program rank, cohort, and field:
+    \begin{equation}
+        Y_{ic} = \alpha + \beta\, S_{ic} + \mathbf{X}_{ic}'\gamma + \theta_c + \lambda_p + \varepsilon_{ic}
+    \end{equation}
+    \item \textbf{Research agenda shift}: event-study around expected tenure year ($\approx$6--8 years post-PhD), testing whether sensitive-topic researchers reduce their share of sensitive publications approaching tenure.
+    \item Key identification challenge: separating genuine preference change from strategic self-censorship.
+\end{itemize}
+
+\section{Results}
+\label{sec:results}
+\begin{itemize}
+    \item Women are substantially more likely than men to write sensitive-topic dissertations in the 2024 cohort (see Table~\ref{tab:summary}).
+    \item This gender gap is largest at top-10 and top-20 programs (see Figure~\ref{fig:gender_gap}).
+    \item Gap persists across all sensitive subcategories; largest for gender-related topics.
+    \item Sensitive-topic dissertations concentrated in labor economics and development economics.
+    \item \textit{Longitudinal career outcomes results pending completion of IDEAS/RePEC merge.}
+\end{itemize}
+
+\section{Conclusion}
+\label{sec:conclusion}
+\begin{itemize}
+    \item Preliminary evidence points to a large gender gap in sensitive-topic dissertation research, particularly at top programs.
+    \item Next steps: complete IDEAS/RePEC merge for 1990--2024 cohorts; estimate career penalty and research-agenda-shift specifications.
+    \item If sensitive-topic research is penalized, the profession may be systematically underproducing knowledge on some of the most policy-relevant questions.
+\end{itemize}
+
+\vfill
+\pagebreak{}
+\cleardoublepage
+\begin{spacing}{1.0}
+\bibliographystyle{jpe}
+%\nocite{*}
+\bibliography{myfile}
+\addcontentsline{toc}{section}{References}
+\end{spacing}
+\cleardoublepage
+
+%--------------------------------------------------
+% Tables and Figures
+%--------------------------------------------------
+
+\section*{Figures and Tables}
+\label{sec:figures-tables}
+
+\begin{table}[h!]
+\centering
+\caption{Summary Statistics: 2024 JEL Annual Dissertations List}
+\label{tab:summary}
+\begin{tabular}{lcc}
+\toprule
+ & Men & Women \\
+\midrule
+Total dissertations & [N] & [N] \\
+Share sensitive topic (\%) & [x] & [x] \\
+Top-10 program (\%) & [x] & [x] \\
+\bottomrule
+\end{tabular}
+\caption*{\textit{Notes:} Data from 2024 JEL Annual Dissertations List. To be populated with actual values.}
+\end{table}
+
+\newpage
+\begin{figure}[h!]
+\centering
+% \includegraphics[width=0.85\textwidth]{figures/gender_gap_by_tier.pdf}
+\caption{Gender Gap in Sensitive-Topic Dissertations by Program Tier, 2024}
+\label{fig:gender_gap}
+\caption*{\textit{Notes:} Share of dissertations classified as sensitive, by gender and program tier. Figure to be inserted once R output is finalized.}
+\end{figure}
+
+\end{document}
